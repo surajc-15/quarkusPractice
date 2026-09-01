@@ -10,6 +10,7 @@
     <include file="db/changelog/001-drop-users.xml"/>
     <include file="db/changelog/002-create-users.xml"/>
     <include file="db/changelog/003-change-password-to-passwordhash.xml"/>
+    <include file="db/changelog/004-create-tasks.xml"/>
 
 
 </databaseChangeLog>

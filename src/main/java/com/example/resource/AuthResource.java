@@ -1,7 +1,9 @@
 package com.example.resource;
 
 import com.example.dtos.*;
+import com.example.exceptions.InvalidTokenException;
 import com.example.service.AuthService;
+import io.quarkus.security.Authenticated;
 import jakarta.annotation.security.PermitAll;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
@@ -55,10 +57,12 @@ public class AuthResource {
     }
     @GET
     @Path("/auto-login")
-    @io.quarkus.security.Authenticated
     @Produces(MediaType.APPLICATION_JSON)
-    public Response autoLogin() {
+    @Authenticated
+    public Response autoLogin(@Context HttpHeaders headers)  {
+
         AutoLoginResponse response = authService.autoLogin();
+
         return Response.ok(response).build();
     }
 

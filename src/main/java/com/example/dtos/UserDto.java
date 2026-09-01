@@ -1,6 +1,6 @@
 package com.example.dtos;
 
-import com.example.entity.Role;
+import com.example.entity.enums.Role;
 
 public class UserDto {
     private String username;
