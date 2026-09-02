@@ -60,7 +60,7 @@ public class AuthService {
                 .groups(user.getRole().name())
                 .issuedAt(Instant.now())
                 .expiresAt(
-                        Instant.now().plus(Duration.ofMinutes(15))
+                        Instant.now().plus(Duration.ofMinutes(60))
                 )
                 .sign();
     }

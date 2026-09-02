@@ -1,0 +1,25 @@
+package com.example.exceptions.tasks;
+import com.example.exceptions.responses.ErrorResponse;
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.ext.ExceptionMapper;
+import jakarta.ws.rs.ext.Provider;
+
+@Provider
+public class TaskNotFoundExceptionMapper
+        implements ExceptionMapper<TaskNotFoundException> {
+
+    @Override
+    public Response toResponse(TaskNotFoundException exception) {
+
+        ErrorResponse error = new ErrorResponse(
+                Response.Status.NOT_FOUND.getStatusCode(),
+                exception.getMessage()
+        );
+
+        return Response.status(Response.Status.NOT_FOUND)
+                .type(MediaType.APPLICATION_JSON)
+                .entity(error)
+                .build();
+    }
+}

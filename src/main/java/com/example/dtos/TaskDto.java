@@ -12,5 +12,8 @@ public record TaskDto(
     java.time.LocalDateTime created_at,
     java.time.LocalDateTime updated_at
 ) {
+    public String getId() {
+        return id.toString();
+    }
 }
 

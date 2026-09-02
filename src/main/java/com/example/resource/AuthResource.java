@@ -11,10 +11,7 @@ import jakarta.ws.rs.core.HttpHeaders;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import java.util.logging.Logger;
-
-import static jakarta.ws.rs.client.Entity.entity;
-
+import org.jboss.logging.Logger;
 
 @Path("/auth")
 @Consumes(MediaType.APPLICATION_JSON)
@@ -22,7 +19,7 @@ import static jakarta.ws.rs.client.Entity.entity;
 public class AuthResource {
 
     private final AuthService authService;
-    private final Logger logger= Logger.getLogger(AuthResource.class.getName());
+    private final Logger logger = Logger.getLogger(AuthResource.class);
 
     public AuthResource(AuthService authService) {
         this.authService = authService;
@@ -33,6 +30,8 @@ public class AuthResource {
     @PermitAll
     public Response login(LoginRequest request) {
 
+        logger.info("Login request received: " + request);
+
         LoginResponse response = authService.login(request);
 
         return Response.ok(response).build();
@@ -41,30 +40,24 @@ public class AuthResource {
     @POST
     @Path("/register")
     @PermitAll
-    public Response register(@Context HttpHeaders headers, UserDto request) {
-        // Implement registration logic here
-        logger.info("Received registration request: " + request);
-        System.out.println("========== REGISTER HIT ==========");
+    public Response register(UserDto request) {
 
-        try{
-            AuthResponse response = authService.register(request);
-            return Response.ok(response).build();
-        } catch (Exception e) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity(e.getMessage())
-                    .build();
-        }
+        logger.info("Received registration request: " + request);
+
+        AuthResponse response = authService.register(request);
+
+        return Response.status(Response.Status.CREATED)
+                .entity(response)
+                .build();
     }
+
     @GET
     @Path("/auto-login")
-    @Produces(MediaType.APPLICATION_JSON)
     @Authenticated
-    public Response autoLogin(@Context HttpHeaders headers)  {
+    public Response autoLogin() {
 
         AutoLoginResponse response = authService.autoLogin();
 
         return Response.ok(response).build();
     }
-
-
 }

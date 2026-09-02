@@ -2,11 +2,19 @@ package com.example.dtos;
 
 import com.example.entity.enums.Priority;
 import com.example.entity.enums.Status;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 
 public record TaskRequest (
+        @NotBlank
                             String title,
-                            String description,
+        @NotNull
+
+        @NotBlank
+        String description,
                             Status status,
-                            Priority priority){
+        @NotNull
+
+        Priority priority){
 }
